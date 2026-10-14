@@ -1,169 +1,374 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="my">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Labour Officer WKO Taunggyi</title>
-    <style>
-        * { box-sizing: border-box; }
-        body { font-family: 'Pyidaungsu', 'Myanmar Text', sans-serif; background-color: #eef2f7; margin: 0; padding: 15px; color: #333; }
-        .wrapper { max-width: 650px; margin: auto; background: #ffffff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
-        .header-title { text-align: center; color: #0d47a1; margin-bottom: 5px; font-size: 22px; font-weight: bold; }
-        .header-subtitle { text-align: center; color: #555; margin-bottom: 25px; font-size: 14px; }
-        
-        .section-box { background: #f8fafc; border-left: 4px solid #1976d2; padding: 12px 15px; margin-top: 25px; margin-bottom: 15px; font-weight: bold; color: #1976d2; font-size: 16px; border-radius: 0 6px 6px 0; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 13px; color: #444; }
-        input, select, textarea { width: 100%; padding: 11px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; background: #fff; }
-        input:focus, select:focus { border-color: #1976d2; outline: none; box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.15); }
-        
-        .btn-green { background-color: #16a34a; color: white; padding: 14px; border: none; border-radius: 6px; width: 100%; font-size: 16px; cursor: pointer; font-weight: bold; margin-top: 30px; transition: background 0.2s; }
-        .btn-green:hover { background-color: #15803d; }
-        
-        .error { color: #dc2626; font-size: 12px; margin-top: 4px; }
-        .preview-box { margin-top: 8px; display: flex; align-items: center; gap: 10px; }
-        .preview-img { width: 70px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1; display: none; }
-        
-        /* Login Screen Style */
-        #loginScreen { max-width: 400px; margin: 50px auto; background: #ffffff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Labour Officer WKO Taunggyi</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Pyidaungsu', 'Myanmar Text', sans-serif;
+    background: #eef2f7;
+    margin: 0;
+    padding: 12px;
+    color: #222;
+  }
+  .wrap {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 22px;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+  }
+  .hide { display: none; }
+  h2 { text-align: center; color: #1565c0; margin: 4px 0 2px; font-size: 20px; }
+  h3 { text-align: center; color: #555; font-weight: normal; font-size: 15px; margin: 0 0 14px; }
+  .sub { text-align: center; color: #777; font-size: 13px; margin-bottom: 18px; }
+  .sec {
+    background: #1565c0;
+    color: #fff;
+    padding: 8px 12px;
+    margin: 22px 0 12px;
+    border-radius: 5px;
+    font-size: 15px;
+  }
+  .fg { margin-bottom: 14px; }
+  label { display: block; margin-bottom: 5px; font-size: 14px; font-weight: 600; }
+  input, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #c7cdd6;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+    background: #fff;
+  }
+  input:focus, select:focus {
+    outline: none;
+    border-color: #1565c0;
+    box-shadow: 0 0 0 2px #d7e5f7;
+  }
+  .err { color: #c62828; font-size: 12px; margin-top: 4px; min-height: 14px; }
+  .btn {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .btn-save { background: #2e7d32; color: #fff; margin-top: 22px; }
+  .btn-save:hover { background: #256428; }
+  .btn-ghost {
+    background: #fff;
+    color: #1565c0;
+    border: 1px solid #1565c0;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  .btn-ghost:hover { background: #eaf2fb; }
+  .btn-danger {
+    background: #c62828;
+    color: #fff;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  .btn-danger:hover { background: #a01d1d; }
+  .prev {
+    max-width: 120px;
+    max-height: 120px;
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: block;
+  }
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 6px;
+  }
+  .logout {
+    background: #c62828;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .record {
+    background: #f6f8fa;
+    border-left: 3px solid #1565c0;
+    padding: 10px 12px;
+    border-radius: 5px;
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 8px;
+  }
+  .record b { color: #1565c0; }
+  .record small { color: #888; }
+</style>
 </head>
 <body>
 
-    <!-- Login Screen -->
-    <div id="loginScreen">
-        <h2 style="text-align: center; color: #0d47a1; margin-top: 0;">WKO Taunggyi</h2>
-        <p style="text-align: center; color: #666; font-size: 13px; margin-bottom: 25px;">အလုပ်သမားကတ် လျှောက်လွှာ (လေ့ကျင့်ရေးစနစ်)</p>
-        <div class="form-group">
-            <label>Email</label>
-            <input type="email" id="loginEmail" value="wkotaunggyi2026@gmail.com">
-        </div>
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" id="loginPassword" value="91202626">
-        </div>
-        <div id="loginError" class="error" style="text-align: center; margin-bottom: 10px;"></div>
-        <button class="btn-green" style="margin-top: 10px;" onclick="handleLogin()">အကောင့်ဝင်မည်</button>
+<!-- ===== LOGIN ===== -->
+<div id="loginScreen" class="wrap">
+  <h2>Labour Officer WKO Taunggyi</h2>
+  <p class="sub">လေ့ကျင့်ရေး သင်ထောက်ကူ</p>
+
+  <div class="fg">
+    <label>Email</label>
+    <input type="email" id="loginEmail" placeholder="wkotaunggyi2026@gmail.com">
+  </div>
+  <div class="fg">
+    <label>Password</label>
+    <input type="password" id="loginPassword" placeholder="စကားဝှက်">
+  </div>
+  <div id="loginError" class="err"></div>
+  <button class="btn btn-save" onclick="doLogin()">အကောင့်ဝင်မည်</button>
+  <button class="btn btn-ghost" onclick="fillDemo()">Demo ဖြည့်ရန်</button>
+</div>
+
+<!-- ===== APP ===== -->
+<div id="appScreen" class="wrap hide">
+  <div class="topbar">
+    <span>WKO Taunggyi</span>
+    <button class="logout" onclick="doLogout()">ထွက်မည်</button>
+  </div>
+
+  <h2>Labour Officer WKO Taunggyi</h2>
+  <h3>အလုပ်သမားကတ် လျှောက်လွှာ (လေ့ကျင့်ရန်)</h3>
+
+  <form id="laborForm" onsubmit="saveData(event)">
+
+    <div class="sec">ကိုယ်ရေးအချက်အလက်</div>
+
+    <div class="fg">
+      <label>* အမည်</label>
+      <input type="text" id="name" required placeholder="ဥပမာ - မောင်ဖြူ">
+    </div>
+    <div class="fg">
+      <label>* မွေးသက္ကရာဇ်</label>
+      <input type="date" id="dob" required>
+    </div>
+    <div class="fg">
+      <label>* အဘ အမည်</label>
+      <input type="text" id="fatherName" required placeholder="ဥပမာ - ဦးအောင်">
+    </div>
+    <div class="fg">
+      <label>* ကျား / မ</label>
+      <select id="gender">
+        <option value="မ">မ</option>
+        <option value="ကျား">ကျား</option>
+      </select>
+    </div>
+    <div class="fg">
+      <label>* နိုင်ငံသားစိစစ်ရေးအမှတ်</label>
+      <input type="text" id="nrc" required placeholder="ဥပမာ - ၁၂/ဥကမ(နိုင်)၁၂၂၉၈၈">
     </div>
 
-    <!-- Main Application Form -->
-    <div id="appScreen" class="wrapper" style="display: none;">
-        <div class="header-title">Labour Officer WKO Taunggyi</div>
-        <div class="header-subtitle">အလုပ်သမားကတ် မှတ်ပုံတင်လွှာ (အလွယ်တကူ ဖြည့်စွက်ရန်)</div>
-        
-        <form id="laborForm" onsubmit="saveData(event)">
-            
-            <!-- ၁။ ကိုယ်ရေးအချက်အလက် -->
-            <div class="section-box">၁။ ကိုယ်ရေးအချက်အလက်</div>
-            
-            <div class="form-group">
-                <label>* အမည်</label>
-                <input type="text" id="name" required placeholder="ဥပမာ - မသန္တာထွန်း">
-            </div>
+    <div class="sec">ဓာတ်ပုံနှင့် အထောက်အထား</div>
 
-            <div class="form-group">
-                <label>* မွေးသက္ကရာဇ်</label>
-                <input type="date" id="dob" required>
-            </div>
-
-            <div class="form-group">
-                <label>* အဘ အမည်</label>
-                <input type="text" id="fatherName" required placeholder="ဥပမာ - ဦးဘိုးငွေ">
-            </div>
-
-            <div class="form-group">
-                <label>* ကျား/မ</label>
-                <select id="gender">
-                    <option value="မ">မ</option>
-                    <option value="ကျား">ကျား</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>* နိုင်ငံသားစိစစ်ရေးအမှတ် (မှတ်ပုံတင်)</label>
-                <input type="text" id="nrc" required placeholder="ဥပမာ - ၁၂/ဥကမ(နိုင်)၁၂၂၉၈၈">
-            </div>
-
-            <!-- ၂။ ဓာတ်ပုံ -->
-            <div class="section-box">၂။ ဓာတ်ပုံထည့်သွင်းရန်</div>
-            <div class="form-group">
-                <label>* မိမိဓာတ်ပုံ (Photo)</label>
-                <input type="file" id="photo" accept="image/*" onchange="previewImage(event, 'photoPreview')" required>
-                <div class="preview-box">
-                    <img id="photoPreview" class="preview-img">
-                </div>
-            </div>
-
-            <!-- ၃။ ဆက်သွယ်ရန်လိပ်စာ -->
-            <div class="section-box">၃။ ဆက်သွယ်ရန်လိပ်စာ (က မှ ည)</div>
-            
-            <div class="form-group">
-                <label>* အိမ်အမှတ်၊ လမ်း၊ မြို့၊ ပြည်နယ်</label>
-                <input type="text" id="address" required placeholder="ဥပမာ - အမှတ်(၁)၊ ဗိုလ်ချုပ်လမ်း၊ တောင်ကြီး၊ ရှမ်းပြည်နယ်">
-            </div>
-
-            <div class="form-group">
-                <label>* ဖုန်းနံပါတ် (09 ဖြင့်စပြီး ဂဏန်း 9 လုံး)</label>
-                <input type="text" id="phone" placeholder="09234567891" maxlength="11" required oninput="validatePhone(this)">
-                <div id="phoneError" class="error"></div>
-            </div>
-
-            <!-- ၄။ ပညာအရည်အချင်း -->
-            <div class="section-box">၄။ ပညာအရည်အချင်း</div>
-            <div class="form-group">
-                <label>* ကျောင်းအမည် နှင့် အတန်း (၃ တန်း မှ ၁၂ တန်း သို့မဟုတ် ပထမနှစ် မှ ဘွဲ့ရ)</label>
-                <input type="text" id="education" required placeholder="ဥပမာ - အထက (က) ၃ တန်း (သို့မဟုတ်) ဘွဲ့ရ ခဘွဲ့">
-            </div>
-
-            <!-- အစိမ်းရောင် Save ခလုတ် -->
-            <button type="submit" class="btn-green">SAVE (သိမ်းဆည်းမည်)</button>
-        </form>
+    <div class="fg">
+      <label>* မိမိဓာတ်ပုံ</label>
+      <input type="file" id="photo" accept="image/*" onchange="showPreview(event,'photoPreview')">
+      <img id="photoPreview" class="prev" alt="">
+    </div>
+    <div class="fg">
+      <label>ဘွဲ့လက်မှတ် / အထောက်အထားပုံ</label>
+      <input type="file" id="signature" accept="image/*" onchange="showPreview(event,'sigPreview')">
+      <img id="sigPreview" class="prev" alt="">
     </div>
 
-    <script>
-        function handleLogin() {
-            const email = document.getElementById('loginEmail').value.trim();
-            const pass = document.getElementById('loginPassword').value.trim();
-            const errorDiv = document.getElementById('loginError');
+    <div class="sec">ဆက်သွယ်ရန်လိပ်စာ</div>
 
-            if(email === 'wkotaunggyi2026@gmail.com' && pass === '91202626') {
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('appScreen').style.display = 'block';
-            } else {
-                errorDiv.innerText = 'Email သို့မဟုတ် Password အမှားဖြစ်နေပါသည်။';
-            }
-        }
+    <div class="fg">
+      <label>* အိမ်အမှတ်</label>
+      <input type="text" id="houseNo" required placeholder="ဥပမာ - ၁၂၃">
+    </div>
+    <div class="fg">
+      <label>* လမ်းအမည်</label>
+      <input type="text" id="street" required placeholder="ဥပမာ - ဝါးပြားလမ်း">
+    </div>
+    <div class="fg">
+      <label>* တိုင်းဒေသကြီး / ပြည်နယ်</label>
+      <select id="state">
+        <option>ရှမ်းပြည်နယ်</option>
+        <option>ရန်ကုန်တိုင်းဒေသကြီး</option>
+        <option>မန္တလေးတိုင်းဒေသကြီး</option>
+        <option>ကချင်ပြည်နယ်</option>
+        <option>ကယားပြည်နယ်</option>
+      </select>
+    </div>
+    <div class="fg">
+      <label>* မြို့နယ်</label>
+      <input type="text" id="township" required placeholder="ဥပမာ - တောင်ကြီးမြို့နယ်">
+    </div>
+    <div class="fg">
+      <label>* ဖုန်းနံပါတ် (09 နဲ့စပြီး ၁၁ လုံး)</label>
+      <input type="tel" id="phone" maxlength="11" required oninput="checkPhone(this)" placeholder="၀၉၁၂၃၄၅၆၇၈၉">
+      <div id="phoneError" class="err"></div>
+    </div>
 
-        function validatePhone(input) {
-            let val = input.value.replace(/[^0-9]/g, '');
-            input.value = val;
-            let err = document.getElementById('phoneError');
-            if(val.length > 0 && (!val.startsWith('09') || val.length !== 11)) {
-                err.innerText = '09 ဖြင့်စပြီး ဂဏန်း (၁၁) လုံး တိကျရပါမည်။ (ဥပမာ - 09234567891)';
-            } else {
-                err.innerText = '';
-            }
-        }
+    <div class="sec">ပညာအရည်အချင်း</div>
 
-        function previewImage(event, previewId) {
-            const reader = new FileReader();
-            reader.onload = function(){
-                const output = document.getElementById(previewId);
-                output.src = reader.result;
-                output.style.display = 'block';
-            };
-            reader.readAsDataURL(event.target.files[0]);
-        }
+    <div class="fg">
+      <label>* ကျောင်းအမည်</label>
+      <input type="text" id="schoolName" required placeholder="ဥပမာ - အထက (က) တောင်ကြီး">
+    </div>
+    <div class="fg">
+      <label>* အတန်း / ဘွဲ့အမျိုးအစား</label>
+      <input type="text" id="educationLevel" required placeholder="ဥပမာ - ၁၂ တန်း / BA History">
+    </div>
 
-        function saveData(e) {
-            e.preventDefault();
-            let phone = document.getElementById('phone').value;
-            if(!phone.startsWith('09') || phone.length !== 11) {
-                alert('ဖုန်းနံပါတ် မမှန်ကန်ပါ။ 09 ဖြင့်စသော ဂဏန်း ၁၁ လုံး ဖြစ်ရပါမည်။');
-                return;
-            }
-            alert('အချက်အလက်များကို အောင်မြင်စွာ သိမ်းဆည်းပြီးပါပြီ သူငယ်ချင်း။');
-        }
-    </script>
+    <button type="submit" class="btn btn-save">သိမ်းဆည်းမည်</button>
+    <button type="button" class="btn btn-ghost" onclick="clearForm()">ဖောင် ပြန်ရှင်းမည်</button>
+  </form>
+
+  <div id="savedBox" class="hide">
+    <div class="sec" style="background:#2e7d32; margin-top:28px;">သိမ်းထားတဲ့ စာရင်း</div>
+    <div id="records"></div>
+    <button class="btn btn-danger" onclick="wipeAll()">အားလုံး ဖျက်မည်</button>
+  </div>
+</div>
+
+<script>
+  const EMAIL = 'wkotaunggyi2026@gmail.com';
+  const PASS  = '91202626';
+
+  window.onload = function () {
+    if (sessionStorage.getItem('wko_login') === 'yes') {
+      openApp();
+    }
+    renderRecords();
+  };
+
+  function fillDemo() {
+    document.getElementById('loginEmail').value = EMAIL;
+    document.getElementById('loginPassword').value = PASS;
+  }
+
+  function doLogin() {
+    const e = document.getElementById('loginEmail').value.trim();
+    const p = document.getElementById('loginPassword').value.trim();
+    const box = document.getElementById('loginError');
+
+    if (e === EMAIL && p === PASS) {
+      sessionStorage.setItem('wko_login', 'yes');
+      openApp();
+    } else {
+      box.innerText = 'Email ဒါမှမဟုတ် Password မှားနေတယ်။';
+    }
+  }
+
+  function openApp() {
+    document.getElementById('loginScreen').classList.add('hide');
+    document.getElementById('appScreen').classList.remove('hide');
+    renderRecords();
+  }
+
+  function doLogout() {
+    if (!confirm('ထွက်မှာ သေချာလား?')) return;
+    sessionStorage.removeItem('wko_login');
+    location.reload();
+  }
+
+  function checkPhone(el) {
+    el.value = el.value.replace(/[^0-9]/g, '');
+    const err = document.getElementById('phoneError');
+    const v = el.value;
+    if (v.length && (v.slice(0,2) !== '09' || v.length !== 11)) {
+      err.innerText = '09 နဲ့စပြီး ၁၁ လုံး ဖြစ်ရမယ်။';
+    } else {
+      err.innerText = '';
+    }
+  }
+
+  function showPreview(ev, id) {
+    const f = ev.target.files[0];
+    if (!f) return;
+    const r = new FileReader();
+    r.onload = e => document.getElementById(id).src = e.target.result;
+    r.readAsDataURL(f);
+  }
+
+  function saveData(ev) {
+    ev.preventDefault();
+    const ph = document.getElementById('phone').value;
+    if (ph.slice(0,2) !== '09' || ph.length !== 11) {
+      alert('ဖုန်းနံပါတ် မမှန်ဘူး။ 09 နဲ့စပြီး ၁၁ လုံး ဖြစ်ရမယ်။');
+      return;
+    }
+
+    const rec = {
+      id: Date.now(),
+      name: document.getElementById('name').value,
+      dob: document.getElementById('dob').value,
+      father: document.getElementById('fatherName').value,
+      gender: document.getElementById('gender').value,
+      nrc: document.getElementById('nrc').value,
+      houseNo: document.getElementById('houseNo').value,
+      street: document.getElementById('street').value,
+      state: document.getElementById('state').value,
+      township: document.getElementById('township').value,
+      phone: ph,
+      school: document.getElementById('schoolName').value,
+      level: document.getElementById('educationLevel').value,
+      at: new Date().toLocaleString('my-MM')
+    };
+
+    const list = JSON.parse(localStorage.getItem('wko_data') || '[]');
+    list.push(rec);
+    localStorage.setItem('wko_data', JSON.stringify(list));
+
+    alert('သိမ်းပြီးပါပြီ။');
+    clearForm();
+    renderRecords();
+  }
+
+  function clearForm() {
+    document.getElementById('laborForm').reset();
+    document.getElementById('photoPreview').src = '';
+    document.getElementById('sigPreview').src = '';
+    document.getElementById('phoneError').innerText = '';
+  }
+
+  function renderRecords() {
+    const list = JSON.parse(localStorage.getItem('wko_data') || '[]');
+    const box = document.getElementById('savedBox');
+    const out = document.getElementById('records');
+
+    if (!list.length) {
+      box.classList.add('hide');
+      return;
+    }
+    box.classList.remove('hide');
+
+    out.innerHTML = list.map((r, i) => `
+      <div class="record">
+        <b>${i+1}. ${r.name || '(အမည်မဖြည့်)'}</b><br>
+        မွေး - ${r.dob || '-'} | ${r.gender}<br>
+        NRC - ${r.nrc || '-'}<br>
+        ဖုန်း - ${r.phone}<br>
+        လိပ်စာ - ${r.houseNo}, ${r.street}, ${r.township}, ${r.state}<br>
+        ပညာ - ${r.school} (${r.level})<br>
+        <small>${r.at}</small>
+      </div>
+    `).join('');
+  }
+
+  function wipeAll() {
+    if (!confirm('အားလုံး ဖျက်မှာ သေချာလား?')) return;
+    localStorage.removeItem('wko_data');
+    renderRecords();
+  }
+</script>
 </body>
 </html>
