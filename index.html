@@ -1,0 +1,169 @@
+<<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Labour Officer WKO Taunggyi</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: 'Pyidaungsu', 'Myanmar Text', sans-serif; background-color: #eef2f7; margin: 0; padding: 15px; color: #333; }
+        .wrapper { max-width: 650px; margin: auto; background: #ffffff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+        .header-title { text-align: center; color: #0d47a1; margin-bottom: 5px; font-size: 22px; font-weight: bold; }
+        .header-subtitle { text-align: center; color: #555; margin-bottom: 25px; font-size: 14px; }
+        
+        .section-box { background: #f8fafc; border-left: 4px solid #1976d2; padding: 12px 15px; margin-top: 25px; margin-bottom: 15px; font-weight: bold; color: #1976d2; font-size: 16px; border-radius: 0 6px 6px 0; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 13px; color: #444; }
+        input, select, textarea { width: 100%; padding: 11px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; background: #fff; }
+        input:focus, select:focus { border-color: #1976d2; outline: none; box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.15); }
+        
+        .btn-green { background-color: #16a34a; color: white; padding: 14px; border: none; border-radius: 6px; width: 100%; font-size: 16px; cursor: pointer; font-weight: bold; margin-top: 30px; transition: background 0.2s; }
+        .btn-green:hover { background-color: #15803d; }
+        
+        .error { color: #dc2626; font-size: 12px; margin-top: 4px; }
+        .preview-box { margin-top: 8px; display: flex; align-items: center; gap: 10px; }
+        .preview-img { width: 70px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid #cbd5e1; display: none; }
+        
+        /* Login Screen Style */
+        #loginScreen { max-width: 400px; margin: 50px auto; background: #ffffff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+    </style>
+</head>
+<body>
+
+    <!-- Login Screen -->
+    <div id="loginScreen">
+        <h2 style="text-align: center; color: #0d47a1; margin-top: 0;">WKO Taunggyi</h2>
+        <p style="text-align: center; color: #666; font-size: 13px; margin-bottom: 25px;">အလုပ်သမားကတ် လျှောက်လွှာ (လေ့ကျင့်ရေးစနစ်)</p>
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="loginEmail" value="wkotaunggyi2026@gmail.com">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="loginPassword" value="91202626">
+        </div>
+        <div id="loginError" class="error" style="text-align: center; margin-bottom: 10px;"></div>
+        <button class="btn-green" style="margin-top: 10px;" onclick="handleLogin()">အကောင့်ဝင်မည်</button>
+    </div>
+
+    <!-- Main Application Form -->
+    <div id="appScreen" class="wrapper" style="display: none;">
+        <div class="header-title">Labour Officer WKO Taunggyi</div>
+        <div class="header-subtitle">အလုပ်သမားကတ် မှတ်ပုံတင်လွှာ (အလွယ်တကူ ဖြည့်စွက်ရန်)</div>
+        
+        <form id="laborForm" onsubmit="saveData(event)">
+            
+            <!-- ၁။ ကိုယ်ရေးအချက်အလက် -->
+            <div class="section-box">၁။ ကိုယ်ရေးအချက်အလက်</div>
+            
+            <div class="form-group">
+                <label>* အမည်</label>
+                <input type="text" id="name" required placeholder="ဥပမာ - မသန္တာထွန်း">
+            </div>
+
+            <div class="form-group">
+                <label>* မွေးသက္ကရာဇ်</label>
+                <input type="date" id="dob" required>
+            </div>
+
+            <div class="form-group">
+                <label>* အဘ အမည်</label>
+                <input type="text" id="fatherName" required placeholder="ဥပမာ - ဦးဘိုးငွေ">
+            </div>
+
+            <div class="form-group">
+                <label>* ကျား/မ</label>
+                <select id="gender">
+                    <option value="မ">မ</option>
+                    <option value="ကျား">ကျား</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>* နိုင်ငံသားစိစစ်ရေးအမှတ် (မှတ်ပုံတင်)</label>
+                <input type="text" id="nrc" required placeholder="ဥပမာ - ၁၂/ဥကမ(နိုင်)၁၂၂၉၈၈">
+            </div>
+
+            <!-- ၂။ ဓာတ်ပုံ -->
+            <div class="section-box">၂။ ဓာတ်ပုံထည့်သွင်းရန်</div>
+            <div class="form-group">
+                <label>* မိမိဓာတ်ပုံ (Photo)</label>
+                <input type="file" id="photo" accept="image/*" onchange="previewImage(event, 'photoPreview')" required>
+                <div class="preview-box">
+                    <img id="photoPreview" class="preview-img">
+                </div>
+            </div>
+
+            <!-- ၃။ ဆက်သွယ်ရန်လိပ်စာ -->
+            <div class="section-box">၃။ ဆက်သွယ်ရန်လိပ်စာ (က မှ ည)</div>
+            
+            <div class="form-group">
+                <label>* အိမ်အမှတ်၊ လမ်း၊ မြို့၊ ပြည်နယ်</label>
+                <input type="text" id="address" required placeholder="ဥပမာ - အမှတ်(၁)၊ ဗိုလ်ချုပ်လမ်း၊ တောင်ကြီး၊ ရှမ်းပြည်နယ်">
+            </div>
+
+            <div class="form-group">
+                <label>* ဖုန်းနံပါတ် (09 ဖြင့်စပြီး ဂဏန်း 9 လုံး)</label>
+                <input type="text" id="phone" placeholder="09234567891" maxlength="11" required oninput="validatePhone(this)">
+                <div id="phoneError" class="error"></div>
+            </div>
+
+            <!-- ၄။ ပညာအရည်အချင်း -->
+            <div class="section-box">၄။ ပညာအရည်အချင်း</div>
+            <div class="form-group">
+                <label>* ကျောင်းအမည် နှင့် အတန်း (၃ တန်း မှ ၁၂ တန်း သို့မဟုတ် ပထမနှစ် မှ ဘွဲ့ရ)</label>
+                <input type="text" id="education" required placeholder="ဥပမာ - အထက (က) ၃ တန်း (သို့မဟုတ်) ဘွဲ့ရ ခဘွဲ့">
+            </div>
+
+            <!-- အစိမ်းရောင် Save ခလုတ် -->
+            <button type="submit" class="btn-green">SAVE (သိမ်းဆည်းမည်)</button>
+        </form>
+    </div>
+
+    <script>
+        function handleLogin() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const pass = document.getElementById('loginPassword').value.trim();
+            const errorDiv = document.getElementById('loginError');
+
+            if(email === 'wkotaunggyi2026@gmail.com' && pass === '91202626') {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('appScreen').style.display = 'block';
+            } else {
+                errorDiv.innerText = 'Email သို့မဟုတ် Password အမှားဖြစ်နေပါသည်။';
+            }
+        }
+
+        function validatePhone(input) {
+            let val = input.value.replace(/[^0-9]/g, '');
+            input.value = val;
+            let err = document.getElementById('phoneError');
+            if(val.length > 0 && (!val.startsWith('09') || val.length !== 11)) {
+                err.innerText = '09 ဖြင့်စပြီး ဂဏန်း (၁၁) လုံး တိကျရပါမည်။ (ဥပမာ - 09234567891)';
+            } else {
+                err.innerText = '';
+            }
+        }
+
+        function previewImage(event, previewId) {
+            const reader = new FileReader();
+            reader.onload = function(){
+                const output = document.getElementById(previewId);
+                output.src = reader.result;
+                output.style.display = 'block';
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+
+        function saveData(e) {
+            e.preventDefault();
+            let phone = document.getElementById('phone').value;
+            if(!phone.startsWith('09') || phone.length !== 11) {
+                alert('ဖုန်းနံပါတ် မမှန်ကန်ပါ။ 09 ဖြင့်စသော ဂဏန်း ၁၁ လုံး ဖြစ်ရပါမည်။');
+                return;
+            }
+            alert('အချက်အလက်များကို အောင်မြင်စွာ သိမ်းဆည်းပြီးပါပြီ သူငယ်ချင်း။');
+        }
+    </script>
+</body>
+</html>
